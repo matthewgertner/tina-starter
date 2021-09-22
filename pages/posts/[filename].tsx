@@ -8,6 +8,8 @@ import FourOhFour from "../404";
 export default function BlogPostPage(
   props: AsyncReturnType<typeof getStaticProps>["props"]
 ) {
+  console.log('data', JSON.stringify(props.data, null, 2))
+
   if (props.data && props.data.getPostsDocument) {
     return <Post {...props.data.getPostsDocument} />;
   }
@@ -18,6 +20,7 @@ export default function BlogPostPage(
 }
 
 export const getStaticProps = async ({ params }) => {
+  console.log('getStaticProps', JSON.stringify(params, null, 2))
   const tinaProps = (await getStaticPropsForTina({
     query: `#graphql
       query BlogPostQuery($relativePath: String!) {
@@ -56,6 +59,7 @@ export const getStaticProps = async ({ params }) => {
  * be viewable at http://localhost:3000/posts/hello
  */
 export const getStaticPaths = async () => {
+  console.log('getStaticPaths')
   const postsListData = (await staticRequest({
     query: `#graphql
       {
